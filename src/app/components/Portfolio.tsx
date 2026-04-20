@@ -48,12 +48,13 @@ function Str({ c }: { c: React.ReactNode }) { return <span style={{ color: C.acc
 function Fn({ c }: { c: React.ReactNode }) { return <span style={{ color: '#ff8a4c' }}>{c}</span>; }
 function Com({ c }: { c: React.ReactNode }) { return <span style={{ color: C.muted }}>{c}</span>; }
 
-function CodeBlock({ children }: { children: React.ReactNode }) {
+function CodeBlock({ children, style }: { children: React.ReactNode; style?: React.CSSProperties }) {
   return (
     <div style={{
       background: C.panel, border: `1px solid ${C.line}`, borderRadius: 6,
       padding: '14px 18px', fontSize: 12.5, lineHeight: 1.75, color: C.ink,
       overflowX: 'auto', fontFamily: C.mono,
+      ...style,
     }}>
       {children}
     </div>
@@ -85,7 +86,7 @@ function ReadmeSection({ d }: { d: LangData }) {
             <span style={{ color: C.accent2 }}>{d.h1Line2}</span>
           </h1>
           <p style={{ fontFamily: C.sans, fontSize: 18, lineHeight: 1.55, color: C.ink, maxWidth: 620, margin: 0, whiteSpace: 'pre-line' }}>
-            {d.ledeHi && <span style={{ color: C.muted }}>{d.ledeHi} </span>}{d.lede}
+            {d.lede}
           </p>
           <a href="https://t.me/annademeshko" target="_blank" rel="noopener" className="p-tg-cta">
             <svg width={14} height={14} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -107,7 +108,7 @@ function ReadmeSection({ d }: { d: LangData }) {
       </div>
 
       <div style={{ marginTop: 32 }}>
-        <CodeBlock>
+        <CodeBlock style={{ padding: '14px 16px' }}>
           <div><Ln n={1} /><Com c={d.codeComment} /></div>
           <div><Ln n={2} /><Kw c="export const" /> strengths = [</div>
           {d.codeStrengths.map((s, i) => (
@@ -220,7 +221,7 @@ function StackSection({ d }: { d: LangData }) {
 
 // ── Contact section ───────────────────────────────────────────────────────────
 
-function EmailContactRow({ c }: { c: { label: string; value: string; href: string } }) {
+function EmailContactRow({ c, d }: { c: { label: string; value: string; href: string }; d: LangData }) {
   const [copied, setCopied] = useState(false);
   const [hovered, setHovered] = useState(false);
 
@@ -263,7 +264,7 @@ function EmailContactRow({ c }: { c: { label: string; value: string; href: strin
           letterSpacing: '0.02em',
           zIndex: 10,
         }}>
-          нажми, чтобы скопировать
+          {d.tooltipCopy}
         </span>
       )}
       {copied && (
@@ -283,14 +284,14 @@ function EmailContactRow({ c }: { c: { label: string; value: string; href: strin
           letterSpacing: '0.02em',
           zIndex: 10,
         }}>
-          скопировано!
+          {d.tooltipCopied}
         </span>
       )}
     </a>
   );
 }
 
-function LinkContactRow({ c }: { c: { label: string; value: string; href: string } }) {
+function LinkContactRow({ c, d }: { c: { label: string; value: string; href: string }; d: LangData }) {
   const [hovered, setHovered] = useState(false);
 
   return (
@@ -323,7 +324,7 @@ function LinkContactRow({ c }: { c: { label: string; value: string; href: string
           letterSpacing: '0.02em',
           zIndex: 10,
         }}>
-          нажми, чтобы перейти
+          {d.tooltipNavigate}
         </span>
       )}
     </a>
@@ -337,9 +338,9 @@ function ContactSection({ d }: { d: LangData }) {
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         {d.contacts.map(c =>
           c.label === 'email' ? (
-            <EmailContactRow key={c.label} c={c} />
+            <EmailContactRow key={c.label} c={c} d={d} />
           ) : (c.label === 'telegram' || c.label === 'linkedin') ? (
-            <LinkContactRow key={c.label} c={c} />
+            <LinkContactRow key={c.label} c={c} d={d} />
           ) : (
             <a key={c.label} href={c.href} className="p-contact" target={c.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer">
               <span style={{ color: C.muted, fontSize: 11, textTransform: 'uppercase' as const, letterSpacing: '0.08em' }}>{c.label}</span>

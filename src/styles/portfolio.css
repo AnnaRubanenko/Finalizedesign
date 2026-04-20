@@ -484,9 +484,9 @@
 
   /* Header on mobile - simplified */
   header {
-    padding: 0 16px !important;
-    height: 56px !important;
-    gap: 12px !important;
+    padding: 0 12px !important;
+    height: 48px !important;
+    gap: 8px !important;
     position: sticky !important;
     top: 0 !important;
     z-index: 50 !important;
@@ -494,11 +494,12 @@
     -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
     background: rgba(28,28,32,0.96) !important;
     border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+    font-size: 10px !important;
   }
   header .p-burger { display: none !important; }
   header > div:first-of-type:not(.p-burger) { display: none !important; } /* Hide MacDots */
   .p-header-title {
-    font-size: 15px !important;
+    font-size: 10px !important;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -510,20 +511,20 @@
 
   /* Lang switcher in header on mobile */
   header > div:last-child {
-    gap: 10px !important;
+    gap: 0 !important;
   }
   header > div:last-child > div {
     padding: 2px !important;
-    border-radius: 16px !important;
+    border-radius: 12px !important;
     background: rgba(28,28,32,0.8) !important;
   }
   header .p-lang-btn {
-    padding: 6px 12px !important;
-    font-size: 11px !important;
-    border-radius: 14px !important;
+    padding: 4px 8px !important;
+    font-size: 9px !important;
+    border-radius: 10px !important;
     font-weight: 600 !important;
-    min-width: 40px !important;
-    min-height: 32px !important;
+    min-width: 32px !important;
+    min-height: 24px !important;
   }
   header .p-lang-btn:active {
     transform: scale(0.94);
@@ -537,7 +538,7 @@
   /* Grid layout for mobile - header + main + bottom nav */
   .p-grid {
     grid-template-columns: 1fr !important;
-    grid-template-rows: 56px 1fr auto !important;
+    grid-template-rows: 48px 1fr auto !important;
     grid-template-areas: "top" "main" "nav" !important;
   }
 

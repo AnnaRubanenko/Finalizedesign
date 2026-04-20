@@ -54,6 +54,9 @@ export interface LangData {
   metaYear: string;
   metaRole: string;
   screenPlaceholder: string;
+  tooltipCopy: string;
+  tooltipCopied: string;
+  tooltipNavigate: string;
   stack: { short: string; name: string; skills: string[] }[];
   contacts: { label: string; value: string; href: string }[];
   tracks: string[];
@@ -110,6 +113,9 @@ export const DATA: Record<Lang, LangData> = {
     metaYear: 'год',
     metaRole: 'роль',
     screenPlaceholder: 'скриншот интерфейса',
+    tooltipCopy: 'нажми, чтобы скопировать',
+    tooltipCopied: 'скопировано!',
+    tooltipNavigate: 'нажми, чтобы перейти',
     stack: [
       { short: 'Fi', name: 'figma',          skills: ['auto layout', 'компоненты и варианты', 'дизайн-токены', 'прототипирование', 'dev mode', 'переменные'] },
       { short: 'Ae', name: 'after effects',   skills: ['UI-анимации', 'motion graphics', 'экспорт Lottie'] },
@@ -258,8 +264,8 @@ export const DATA: Record<Lang, LangData> = {
     role: 'product designer',
     h1Line1: 'anna demeshko,',
     h1Line2: 'product designer.',
-    ledeHi: 'hi —',
-    lede: 'i turn complex processes into clear, convenient and beautiful products. crm systems are my passion. i love my work, Ozzy Osbourne\'s music and Michel de Montaigne\'s philosophy.',
+    ledeHi: '',
+    lede: 'i turn complex processes into clear, convenient and beautiful products, crm systems are my passion\n\ni love my work, Ozzy Osbourne\'s music and Michel de Montaigne\'s philosophy',
     stats: {
       'projects shipped': '10+',
       'case studies': '7',
@@ -301,6 +307,9 @@ export const DATA: Record<Lang, LangData> = {
     metaYear: 'year',
     metaRole: 'role',
     screenPlaceholder: 'interface screenshot',
+    tooltipCopy: 'click to copy',
+    tooltipCopied: 'copied!',
+    tooltipNavigate: 'click to navigate',
     stack: [
       { short: 'Fi', name: 'figma',          skills: ['auto layout', 'components & variants', 'design tokens', 'prototyping', 'dev mode', 'variables'] },
       { short: 'Ae', name: 'after effects',   skills: ['UI animations', 'motion graphics', 'Lottie export'] },
