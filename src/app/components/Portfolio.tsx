@@ -52,7 +52,7 @@ function CodeBlock({ children }: { children: React.ReactNode }) {
   return (
     <div style={{
       background: C.panel, border: `1px solid ${C.line}`, borderRadius: 6,
-      padding: '18px 22px', fontSize: 12.5, lineHeight: 1.75, color: C.ink,
+      padding: '14px 18px', fontSize: 12.5, lineHeight: 1.75, color: C.ink,
       overflowX: 'auto', fontFamily: C.mono,
     }}>
       {children}
@@ -62,9 +62,9 @@ function CodeBlock({ children }: { children: React.ReactNode }) {
 
 function SectionHead({ title, ext, meta }: { title: string; ext: string; meta: string }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', paddingBottom: 12, borderBottom: `1px solid ${C.line}`, marginBottom: 16 }}>
+    <div className="p-section-head" style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', paddingBottom: 12, borderBottom: `1px solid ${C.line}`, marginBottom: 16 }}>
       <h2 style={{ fontFamily: C.sans, fontSize: 28, fontWeight: 500, letterSpacing: '-0.02em', margin: 0, color: C.ink, lineHeight: 1.5 }}><span style={{ color: C.muted, fontWeight: 400 }}>./</span>{title}<span style={{ color: C.muted, fontWeight: 400 }}>{ext}</span></h2>
-      <div style={{ fontSize: 11, color: C.muted }}>{meta}</div>
+      <div className="p-section-meta" style={{ fontSize: 11, color: C.muted }}>{meta}</div>
     </div>
   );
 }
@@ -74,7 +74,7 @@ function SectionHead({ title, ext, meta }: { title: string; ext: string; meta: s
 function ReadmeSection({ d }: { d: LangData }) {
   return (
     <section id="readme" style={{ scrollMarginTop: 60 }}>
-      <div style={{ fontSize: 11, color: C.muted, marginBottom: 14, fontFamily: C.mono }}>
+      <div className="p-readme-marker" style={{ fontSize: 11, color: C.muted, marginBottom: 14, fontFamily: C.mono }}>
         <b style={{ color: C.muted, fontWeight: 500 }}>{d.secMarker}</b>
       </div>
 
@@ -84,8 +84,8 @@ function ReadmeSection({ d }: { d: LangData }) {
             {d.h1Line1}<br />
             <span style={{ color: C.accent2 }}>{d.h1Line2}</span>
           </h1>
-          <p style={{ fontFamily: C.sans, fontSize: 18, lineHeight: 1.55, color: C.ink, maxWidth: 620, margin: 0 }}>
-            <span style={{ color: C.muted }}>{d.ledeHi}</span> {d.lede}
+          <p style={{ fontFamily: C.sans, fontSize: 18, lineHeight: 1.55, color: C.ink, maxWidth: 620, margin: 0, whiteSpace: 'pre-line' }}>
+            {d.ledeHi && <span style={{ color: C.muted }}>{d.ledeHi} </span>}{d.lede}
           </p>
           <a href="https://t.me/annademeshko" target="_blank" rel="noopener" className="p-tg-cta">
             <svg width={14} height={14} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -197,57 +197,12 @@ function ProjectsSection({ d, onOpenCase }: { d: LangData; onOpenCase: (id: stri
 // ── Stack section ─────────────────────────────────────────────────────────────
 
 function StackCell({ s }: { s: { short: string; name: string; skills: string[] } }) {
-  const [hovered, setHovered] = useState(false);
   const icon = STACK_ICONS[s.name];
 
   return (
-    <div
-      className="p-stack-cell"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-      style={{ position: 'relative' }}
-    >
+    <div className="p-stack-cell">
       <span className="p-stack-short">{icon ?? s.short}</span>
       <span>{s.name}</span>
-
-      {hovered && (
-        <div style={{
-          position: 'absolute',
-          bottom: 'calc(100% + 8px)',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          background: C.panel2,
-          border: `1px solid ${C.accent2}`,
-          borderRadius: 6,
-          padding: '8px 10px',
-          minWidth: 160,
-          zIndex: 20,
-          pointerEvents: 'none',
-          boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
-        }}>
-          <div style={{ color: C.accent2, fontSize: 9, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 6, fontFamily: C.mono }}>
-            {s.name}
-          </div>
-          {s.skills.map((skill, i) => (
-            <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3, fontFamily: C.mono, fontSize: 10, color: C.ink }}>
-              <span style={{ color: C.accent2, fontSize: 8, flexShrink: 0 }}>▸</span>
-              {skill}
-            </div>
-          ))}
-          {/* Arrow */}
-          <div style={{
-            position: 'absolute',
-            bottom: -5,
-            left: '50%',
-            transform: 'translateX(-50%) rotate(45deg)',
-            width: 8,
-            height: 8,
-            background: C.panel2,
-            borderRight: `1px solid ${C.accent2}`,
-            borderBottom: `1px solid ${C.accent2}`,
-          }} />
-        </div>
-      )}
     </div>
   );
 }
@@ -403,7 +358,7 @@ function ContactSection({ d }: { d: LangData }) {
 function VibesSection({ d, tracksIdx, onCycleTrack }: { d: LangData; tracksIdx: number; onCycleTrack: () => void }) {
   return (
     <section id="vibes" style={{ scrollMarginTop: 60 }}>
-      <SectionHead title={d.secVibesTitle} ext=".m3u" meta={d.secVibesMeta} />
+      <SectionHead title={d.secVibesTitle} ext=".mp3" meta={d.secVibesMeta} />
       <div className="p-vibes" onClick={onCycleTrack}>
         <Equalizer />
         <span style={{ fontFamily: C.mono, fontSize: 12, color: C.muted }}>
@@ -445,7 +400,7 @@ function CaseCodeBlock({ type, label, text }: { type: keyof typeof BLOCK_COLORS;
   return (
     <div style={{
       background: C.panel, border: `1px solid ${C.line}`, borderLeft: `3px solid ${bc.border}`,
-      borderRadius: 6, padding: '14px 22px', fontFamily: C.mono, fontSize: 12.5, lineHeight: 1.75, color: C.ink, overflowX: 'auto',
+      borderRadius: 6, padding: '12px 18px', fontFamily: C.mono, fontSize: 12.5, lineHeight: 1.75, color: C.ink, overflowX: 'auto',
     }}>
       <div>
         <span style={{ color: C.dim, display: 'inline-block', width: 22, textAlign: 'right', marginRight: 14 }}>1</span>
@@ -478,7 +433,7 @@ function CaseView({ project, d, onBack }: { project: Project; d: LangData; onBac
   const total = slides.length;
 
   return (
-    <section id="case" style={{ display: 'flex', flexDirection: 'column', gap: 22 }}>
+    <section id="case" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <button className="p-case-back" onClick={onBack}>← {d.caseBackLabel}</button>
 
       <h1 style={{ fontFamily: C.sans, fontSize: 'clamp(30px, 4.4vw, 42px)', fontWeight: 500, letterSpacing: '-0.02em', lineHeight: 1.08, margin: 0, color: C.ink }}>
@@ -486,7 +441,7 @@ function CaseView({ project, d, onBack }: { project: Project; d: LangData; onBac
         <span style={{ color: C.dim, fontWeight: 300, fontSize: '0.55em', fontFamily: C.mono, letterSpacing: 0, marginLeft: 6, verticalAlign: 'middle', opacity: 0.7 }}>.case</span>
       </h1>
 
-      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: -4 }}>
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: -6 }}>
         {project.tags.map(t => (
           <span key={t} style={{ fontFamily: C.mono, fontSize: 13, padding: '5px 14px', border: `1px solid ${C.line}`, borderRadius: 999, color: C.accent2, background: 'rgba(212,251,60,0.04)', textTransform: 'lowercase' }}>{t}</span>
         ))}
@@ -506,7 +461,7 @@ function CaseView({ project, d, onBack }: { project: Project; d: LangData; onBac
             <img
               src={current.image}
               alt={current.alt || project.subtitle}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', borderRadius: 0 }}
+              style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', borderRadius: 0 }}
             />
           ) : (
             <span style={{ position: 'relative', zIndex: 3, fontFamily: C.mono, fontSize: 11, color: C.muted, padding: '8px 14px', border: `1px dashed ${C.line}`, borderRadius: 3, background: 'rgba(21,21,23,0.7)', backdropFilter: 'blur(4px)', textAlign: 'center', maxWidth: '80%', lineHeight: 1.5 }}>
@@ -540,7 +495,7 @@ function CaseView({ project, d, onBack }: { project: Project; d: LangData; onBac
         </div>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         <CaseCodeBlock type="task" label={d.caseTaskLabel} text={project.task} />
         <CaseCodeBlock type="problem" label={d.caseProblemLabel} text={project.problemFull} />
         <CaseCodeBlock type="solution" label={d.caseSolutionLabel} text={project.solution} />
@@ -562,6 +517,7 @@ export function Portfolio() {
   const [currentCase, setCurrentCase] = useState<string | null>(null);
   const [tracksIdx, setTracksIdx] = useState(0);
   const [activeSection, setActiveSection] = useState('readme');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const mainRef = useRef<HTMLDivElement>(null);
   const d = DATA[lang];
 
@@ -586,6 +542,29 @@ export function Portfolio() {
     setLang(l);
     try { localStorage.setItem('portfolio-lang', l); } catch { /* noop */ }
   };
+
+  // Set viewport for mobile
+  useEffect(() => {
+    const viewport = document.querySelector('meta[name="viewport"]');
+    if (viewport) {
+      viewport.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover');
+    } else {
+      const meta = document.createElement('meta');
+      meta.name = 'viewport';
+      meta.content = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover';
+      document.head.appendChild(meta);
+    }
+  }, []);
+
+  // Prevent scroll when sidebar is open on mobile
+  useEffect(() => {
+    if (sidebarOpen && window.innerWidth <= 768) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => { document.body.style.overflow = ''; };
+  }, [sidebarOpen]);
 
   // Scroll spy
   useEffect(() => {
@@ -612,8 +591,6 @@ export function Portfolio() {
     return () => main.removeEventListener('scroll', onScroll);
   }, [currentCase]);
 
-  const topLevel = ['readme', 'projects', 'stack', 'contact', 'vibes'];
-  const activeTab = currentCase ? 'case' : (topLevel.includes(activeSection) ? activeSection : 'projects');
   const currentProject = currentCase ? d.projects.find(p => p.id === currentCase) : null;
 
   // Sidebar tree item
@@ -623,6 +600,7 @@ export function Portfolio() {
       <button
         className={`p-tree-item${isActive ? ' p-active' : ''}`}
         onClick={() => {
+          setSidebarOpen(false);
           if (isProject) { openCase(id); }
           else if (currentCase) { setCurrentCase(null); requestAnimationFrame(() => scrollToSection(id)); }
           else { scrollToSection(id); }
@@ -636,51 +614,40 @@ export function Portfolio() {
     );
   }
 
-  // Tab button
-  function TabBtn({ id, label }: { id: string; label: string }) {
-    const isActive = !currentCase && activeTab === id;
-    return (
-      <button
-        className={`p-tab${isActive ? ' p-active' : ''}`}
-        onClick={() => {
-          if (currentCase) { setCurrentCase(null); requestAnimationFrame(() => scrollToSection(id)); }
-          else scrollToSection(id);
-        }}
-      >
-        {label}<span style={{ color: C.dim, fontSize: 10 }}>×</span>
-      </button>
-    );
-  }
 
   return (
     <div className="p-root" style={{ position: 'relative' }}>
-
-      {/* Lang switcher */}
-      <div style={{ position: 'fixed', top: 14, right: 16, zIndex: 100, display: 'flex', background: 'rgba(28,28,32,0.9)', backdropFilter: 'blur(12px)', border: `1px solid ${C.line}`, borderRadius: 999, padding: 3 }}>
-        {(['ru', 'en'] as Lang[]).map(l => (
-          <button key={l} className={`p-lang-btn${lang === l ? ' p-active' : ''}`} onClick={() => switchLang(l)}>{l}</button>
-        ))}
-      </div>
 
       {/* Grid */}
       <div className="p-grid" style={{ display: 'grid', gridTemplateRows: '36px 1fr 22px', gridTemplateColumns: '260px 1fr', gridTemplateAreas: '"top top" "side main" "status status"', height: '100vh' }}>
 
         {/* Top bar */}
         <header style={{ gridArea: 'top', borderBottom: `1px solid ${C.line}`, background: C.panel, display: 'flex', alignItems: 'center', padding: '0 14px', gap: 14, fontSize: 11, color: C.muted, fontFamily: C.mono }}>
+          <button className="p-burger" onClick={() => setSidebarOpen(!sidebarOpen)} aria-label="menu">
+            <svg width={16} height={16} viewBox="0 0 16 16" fill="none">
+              <path d="M2 4h12M2 8h12M2 12h12" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" />
+            </svg>
+          </button>
           <MacDots />
-          <span style={{ color: C.ink }}>~/portfolio/<b style={{ color: C.accent2, fontWeight: 500 }}>{currentCase ? `${currentCase}.case` : d.filename}</b></span>
-          <div style={{ marginLeft: 'auto', display: 'flex', gap: 14, alignItems: 'center', marginRight: 110 }}>
-            <span style={{ opacity: 0.7 }}>{d.ln}</span>
-            <span style={{ opacity: 0.7 }}>utf-8</span>
+          <span className="p-header-title" style={{ color: C.ink }}>~/portfolio/<b style={{ color: C.accent2, fontWeight: 500 }}>{currentCase ? `${currentCase}.case` : 'анна_демешко.fig'}</b></span>
+          <div style={{ marginLeft: 'auto', display: 'flex', gap: 14, alignItems: 'center' }}>
+            <span className="p-header-meta" style={{ opacity: 0.7 }}>{d.ln}</span>
+            <span className="p-header-meta" style={{ opacity: 0.7 }}>utf-8</span>
+            <div style={{ display: 'flex', border: `1px solid ${C.line}`, borderRadius: 999, padding: 2, marginLeft: 6 }}>
+              {(['ru', 'en'] as Lang[]).map(l => (
+                <button key={l} className={`p-lang-btn${lang === l ? ' p-active' : ''}`} onClick={() => switchLang(l)}>{l}</button>
+              ))}
+            </div>
           </div>
         </header>
 
+
         {/* Sidebar */}
-        <aside className="p-sidebar" style={{ gridArea: 'side', background: C.panel, borderRight: `1px solid ${C.line}`, overflowY: 'auto', padding: '8px 0 20px' }}>
+        <aside className={`p-sidebar${sidebarOpen ? ' p-sidebar-open' : ''}`} style={{ gridArea: 'side', background: C.panel, borderRight: `1px solid ${C.line}`, overflowY: 'auto', padding: '8px 0 20px' }}>
           {[
             { label: d.folderAbout, items: [{ id: 'readme', icon: '☰', name: 'readme', ext: '.md' }, { id: 'stack', icon: '☰', name: 'stack', ext: '.json' }] },
             { label: d.folderProjects, items: d.projects.map(p => ({ id: p.id, icon: '◆', name: p.id, ext: '.case', isProject: true })) },
-            { label: d.folderEtc, items: [{ id: 'contact', icon: '@', name: 'contact', ext: '.md' }, { id: 'vibes', icon: '♪', name: 'vibes', ext: '.m3u' }] },
+            { label: d.folderEtc, items: [{ id: 'contact', icon: '@', name: 'contact', ext: '.md' }, { id: 'vibes', icon: '♪', name: 'vibes', ext: '.mp3' }] },
           ].map(folder => (
             <div key={folder.label} style={{ padding: '10px 10px 4px' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, padding: '5px 10px 5px 4px', fontSize: 10, color: C.muted, textTransform: 'uppercase', letterSpacing: '0.08em', userSelect: 'none' }}>
@@ -696,23 +663,8 @@ export function Portfolio() {
         {/* Main */}
         <main className="p-main" ref={mainRef} style={{ gridArea: 'main', overflowY: 'auto', scrollBehavior: 'smooth', background: C.bg, minWidth: 0 }}>
 
-          {/* Tabs */}
-          <div className="p-tabs" style={{ position: 'sticky', top: 0, display: 'flex', borderBottom: `1px solid ${C.line}`, background: C.panel, overflowX: 'auto', scrollbarWidth: 'none', zIndex: 5 }}>
-            <TabBtn id="readme" label="readme.md" />
-            <TabBtn id="projects" label="projects/*.case" />
-            <TabBtn id="stack" label="stack.json" />
-            <TabBtn id="contact" label="contact.md" />
-            <TabBtn id="vibes" label="vibes.m3u" />
-            {currentCase && (
-              <button className="p-tab p-case-tab p-active">
-                {currentCase}.case
-                <span onClick={e => { e.stopPropagation(); closeCase(); }} style={{ marginLeft: 2, padding: '1px 5px', borderRadius: 3, color: C.dim, fontSize: 12, lineHeight: 1, cursor: 'pointer' }}>×</span>
-              </button>
-            )}
-          </div>
-
           {/* Editor */}
-          <div className="p-editor" id="editor" style={{ padding: '28px 40px 120px', maxWidth: 980, margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', gap: 44 }}>
+          <div className="p-editor" id="editor" style={{ padding: '24px 40px 120px', maxWidth: 980, margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', gap: 36 }}>
             {currentCase && currentProject ? (
               <CaseView project={currentProject} d={d} onBack={closeCase} />
             ) : (
@@ -727,8 +679,8 @@ export function Portfolio() {
           </div>
         </main>
 
-        {/* Status bar */}
-        <footer style={{ gridArea: 'status', background: C.accent, color: '#fff', display: 'flex', alignItems: 'center', padding: '0 14px', gap: 14, fontSize: 10, letterSpacing: '0.04em', fontFamily: C.mono }}>
+        {/* Status bar / Mobile nav */}
+        <footer className="p-statusbar" style={{ gridArea: 'status', background: C.accent, color: '#fff', display: 'flex', alignItems: 'center', padding: '0 14px', gap: 14, fontSize: 10, letterSpacing: '0.04em', fontFamily: C.mono }}>
           <span className="p-blink">●</span>
           <span>{d.statReady}</span>
           <span style={{ opacity: 0.4 }}>|</span>
@@ -741,6 +693,33 @@ export function Portfolio() {
             <span>hi@demeshko.design</span>
           </div>
         </footer>
+
+        {/* Mobile bottom nav */}
+        <nav className="p-mobile-nav">
+          {currentCase ? (
+            <button className="p-mobile-nav-back" onClick={closeCase}>
+              <span>← Back</span>
+            </button>
+          ) : (
+            [
+              { id: 'readme', label: 'About' },
+              { id: 'projects', label: 'Projects' },
+              { id: 'contact', label: 'Contact' },
+            ].map((item, idx, arr) => (
+              <button
+                key={item.id}
+                className={`p-mobile-nav-btn${activeSection === item.id ? ' p-active' : ''}`}
+                onClick={() => {
+                  setSidebarOpen(false);
+                  scrollToSection(item.id);
+                }}
+                style={{ borderRight: idx < arr.length - 1 ? `1px solid ${C.line}` : 'none' }}
+              >
+                {item.label}
+              </button>
+            ))
+          )}
+        </nav>
       </div>
     </div>
   );

@@ -67,8 +67,8 @@ export const DATA: Record<Lang, LangData> = {
     role: 'product designer',
     h1Line1: 'анна демешко,',
     h1Line2: 'product designer.',
-    ledeHi: 'привет —',
-    lede: 'я превращаю сложные b2b-процессы в инструменты, в которых хочется жить. 5+ лет в enterprise, saas и студиях. слушаю оззи, читаю монтеня, проектирую интерфейсы с характером.',
+    ledeHi: '',
+    lede: 'превращаю сложные процессы в понятные, удобные и красивые продукты, crm системы — моя страсть\n\nлюблю свою работу, музыку Оззи Осборна и философию Мишеля Монтеня',
     stats: {
       'projects shipped': '10+',
       'case studies': '7',
@@ -259,7 +259,7 @@ export const DATA: Record<Lang, LangData> = {
     h1Line1: 'anna demeshko,',
     h1Line2: 'product designer.',
     ledeHi: 'hi —',
-    lede: 'i turn complex b2b processes into tools people actually want to live in. 5+ years across enterprise, saas and studios. i listen to ozzy, read montaigne, and design interfaces with character.',
+    lede: 'i turn complex processes into clear, convenient and beautiful products. crm systems are my passion. i love my work, Ozzy Osbourne\'s music and Michel de Montaigne\'s philosophy.',
     stats: {
       'projects shipped': '10+',
       'case studies': '7',
