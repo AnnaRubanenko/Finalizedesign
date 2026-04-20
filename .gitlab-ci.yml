@@ -1,0 +1,10 @@
+pages:
+  stage: deploy
+  script:
+    - mkdir public
+    - cp -r * public/          # копирует всё в public
+  artifacts:
+    paths:
+      - public
+  only:
+    - main                     # или master, если у тебя main нет
